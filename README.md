@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 # Student-Teacher Booking Appointment System
 
@@ -193,3 +194,7 @@ Contributions are welcome! Please follow these steps:
 # Student-Teacher-Booking-appointment-
 This is a MERN stack project designed to facilitate the booking of appointments between students and teachers. The system includes functionalities for admins to manage teachers, for teachers to manage their appointments, and for students to book appointments with teachers.
 >>>>>>> a4aa20c53c9ece18526ecd21dfe52c3454cc322d
+=======
+# Campus-connection
+Developed a role-based MERN web application enabling students to book appointments with teachers through an organized scheduling system. Implemented secure authentication, availability management, and approval workflow to prevent conflicts and streamline communication.
+>>>>>>> 14847a5d691b0349860cc23218e05d2870451f44
