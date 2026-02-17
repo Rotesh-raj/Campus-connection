@@ -40,25 +40,29 @@ function Admin() {
 
   const [students, setStudents] = useState([]);
 
-  useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/teachers`,
-          {
-            params: {
-              admissionStatus: false,
-            },
-          }
-        );
-        setStudents(response.data.students);
-      } catch (error) {
-        console.error("Error fetching students data:", error);
-      }
-    };
+ useEffect(() => {
+  const fetchStudents = async () => {
+    try {
+      const jwtToken = localStorage.getItem("jwtToken");
 
-    fetchStudents();
-  }, []);
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/admin/pending-students`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
+
+      setStudents(response.data.students);
+    } catch (error) {
+      console.error("Error fetching students data:", error);
+    }
+  };
+
+  fetchStudents();
+}, []);
+
 
   const handleDeleteTeacher = async (_id, index) => {
     const jwtToken = localStorage.getItem("jwtToken");

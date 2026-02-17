@@ -3,6 +3,9 @@ const express=require('express');
 const { getAllTeachers, createTeacher, getTeacher, updateTeacher, deleteTeacher, allow, setRole, approveStudent, deleteStudent } = require('../controllers/adminController');
 const { verifyToken } = require('../controllers/authController');
 const router = express.Router()
+const { getPendingStudents } = require('../controllers/adminController');
+
+router.get('/pending-students', verifyToken, allow('admin'), getPendingStudents);
 
 
 router.route('/').get(verifyToken,getAllTeachers).post(verifyToken,allow('admin'),setRole('teacher'),createTeacher);
