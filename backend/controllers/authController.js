@@ -22,19 +22,20 @@ exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return next(new AppError('Cannot leave email or password field blank'));
+    return next(new AppError('Cannot leave email or password field blank', 400));
+
   }
 
   const user = await User.findOne({ email });
 
   if (!user) {
-    return next(new AppError('User not found'));
+    return next(new AppError('User not found'), 404);
   }
 
   const isPasswordValid = await verifyPassword(password, user.password);
 
   if (!isPasswordValid) {
-    return next(new AppError('Enter the correct password'));
+    return next(new AppError('Enter the correct password'), 401);
   }
 
   const token = await signToken(user._id, user.roles, user.name ,user.email,user.admissionStatus);
@@ -53,7 +54,7 @@ exports.updatePassword = async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
   if (!(await verifyPassword(password, user.password))) {
-    return next(new AppError('Enter correct password'));
+    return next(new AppError('Enter correct password'), 401);
   }
 
   user.password = newPassword;
@@ -74,7 +75,7 @@ exports.verifyToken = catchAsync(async (req, res, next) => {
   }
 
   if (!token) {
-    return next(new AppError('You are not logged in to gain access'));
+    return next(new AppError('You are not logged in to gain access'), 401);
   }
 
   const decoded = await util.promisify(jwt.verify)(token, process.env.JWT_KEY);
